@@ -7,9 +7,8 @@ on:
   workflow_dispatch: # Add this line to enable manual triggering
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -27,11 +26,9 @@ jobs:
 
     
 
-  deploy:
-    runs-on: ubuntu-latest
-
+   deploy:
     needs: build
-
+    runs-on: ubuntu-latest
     steps:
     - name: Deploy to Azure
       uses: azure/webapps-deploy@v2
