@@ -11,10 +11,6 @@ const app = express();
 
 const port = process.env.PORT || 8080;
 
-app.listen(port, () => {
-	console.log(`Server is running on port ${port}`);
-});
-
 // Serve static files for React build
 const staticPath = path.join(__dirname, '..', 'frontend', 'build');
 console.log('Static files path:', staticPath);
