@@ -34,3 +34,7 @@ mongoose.connect(process.env.MONGO_URI)
 	.catch((error) => {
 		console.log(error)
 	})
+app.get("*", (req, res) => {
+	res.sendFile(path.resolve(__dirname, "client", "build",
+		"index.html"));
+});
