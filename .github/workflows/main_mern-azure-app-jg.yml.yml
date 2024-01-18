@@ -10,28 +10,26 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: 14
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18.15.0
 
-    - name: Install dependencies and Build React App
-      run: |
-        cd frontend
-        npm install
-        npm run build
+      - name: Install dependencies and Build React App
+        run: |
+          cd frontend
+          npm install
+          npm run build
 
-    
-
-   deploy:
+  deploy:
     needs: build
     runs-on: ubuntu-latest
     steps:
-    - name: Deploy to Azure
-      uses: azure/webapps-deploy@v2
-      with:
-        app-name: mern-azure-app-jg
-        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+      - name: Deploy to Azure
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: mern-azure-app-jg
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
