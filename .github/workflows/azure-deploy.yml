@@ -18,17 +18,13 @@ jobs:
       with:
         node-version: 14
 
-    - name: Install dependencies
-      run: |
-        cd backend
-        npm install
-        cd ../frontend
-        npm install
-
-    - name: Build React App
+    - name: Install dependencies and Build React App
       run: |
         cd frontend
+        npm install
         npm run build
+
+    
 
   deploy:
     runs-on: ubuntu-latest
