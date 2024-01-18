@@ -7,7 +7,7 @@ on:
   workflow_dispatch: # Add this line to enable manual triggering
 
 jobs:
-  build:s
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
