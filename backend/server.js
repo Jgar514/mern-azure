@@ -28,12 +28,11 @@ app.get('*', (req, res) => {
 app.use('/api/workouts', workoutRoutes);
 app.use('/api/user', userRoutes);
 
-// Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI)
 	.then(() => {
 		// Listen for requests
-		app.listen(port, () => {
-			console.log('Connected to the database. Server is listening on port:', port);
+		app.listen(8181, () => {
+			console.log('Connected to the database. Server is listening on port: 8181');
 		});
 	})
 	.catch((error) => {
