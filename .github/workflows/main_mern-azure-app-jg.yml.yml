@@ -1,12 +1,13 @@
-name: Azure Deploy
+name: Main MERN Azure App Workflow
 
 on:
   push:
     branches:
       - main
+  workflow_dispatch: # Add this line to enable manual triggering
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
