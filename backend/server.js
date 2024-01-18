@@ -16,6 +16,9 @@ app.use((req, res, next) => {
 	next()
 })
 
+// Serve static files for React build
+app.use(express.static("frontend/build"));
+
 // routes
 app.use('/api/workouts', workoutRoutes)
 app.use('/api/user', userRoutes)
