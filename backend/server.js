@@ -16,15 +16,22 @@ app.use((req, res, next) => {
 	next();
 });
 
+// Serve static files for React build
+app.use(express.static("frontend/build"));
+
 // routes
 app.use("/api/workouts", workoutRoutes);
 app.use("/api/user", userRoutes);
 
-// connect to db
+// Connect to the database
 mongoose
-	.connect(process.env.MONGO_URI)
+	.connect(process.env.MONGO_URI, {
+		useNewUrlParser: true,
+		useUnifiedTopology: true
+	})
 	.then(() => {
-		console.log("connected to database");
+		console.log("Connected to the database");
+
 		// Listen to port
 		const port = process.env.PORT || 5000;
 		app.listen(port, () => {
@@ -32,12 +39,5 @@ mongoose
 		});
 	})
 	.catch((err) => {
-		console.log(err);
+		console.error("Error connecting to the database:", err);
 	});
-
-app.use(express.static('./frontend/build'));
-
-app.get("*", (req, res) => {
-	res.sendFile(path.resolve(__dirname, "frontend", "build",
-		"index.html"));
-});
