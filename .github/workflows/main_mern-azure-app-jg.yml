@@ -35,4 +35,10 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    step
+    steps:
+      - name: Deploy to Azure
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: mern-azure-app-jg
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+
