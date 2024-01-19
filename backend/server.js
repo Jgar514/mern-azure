@@ -9,7 +9,7 @@ const userRoutes = require('./routes/user');
 // Express app
 const app = express();
 
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 8181;
 
 // Serve static files for React build
 const staticPath = path.join(__dirname, '..', 'frontend', 'build');
@@ -31,8 +31,8 @@ app.use('/api/user', userRoutes);
 mongoose.connect(process.env.MONGO_URI)
 	.then(() => {
 		// Listen for requests
-		app.listen(8181, () => {
-			console.log('Connected to the database. Server is listening on port: 8181');
+		app.listen(port, () => {
+			console.log('Connected to the database. Server is listening on port:', port);
 		});
 	})
 	.catch((error) => {
