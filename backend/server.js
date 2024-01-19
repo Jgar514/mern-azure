@@ -9,19 +9,20 @@ const userRoutes = require('./routes/user');
 // Express app
 const app = express();
 
-const port = process.env.PORT || 8181;
+app.set('port', process.env.PORT || 8181);
+console.log("++++++++++++++++" + app.get('port'));
+
 
 // Serve static files for React build
-const staticPath = path.join(__dirname, '..', 'frontend', 'build');
-console.log('Static files path:', staticPath);
-app.use(express.static(staticPath));
+app.use(express.static('./frontend/build'));
 
 // Middleware
 app.use(express.json());
 
 // Serve React index.html for all routes
-app.get('*', (req, res) => {
-	res.sendFile(path.resolve(__dirname, '..', 'frontend', 'build', 'index.html'));
+app.get("*", (req, res) => {
+	res.sendFile(path.resolve(__dirname, "frontend", "build",
+		"index.html"));
 });
 
 // Routes
