@@ -9,5 +9,7 @@
     "build-frontend": "cd frontend && npm run build"
   },
   "dependencies": {},
-  "devDependencies": {}
+  "devDependencies": {
+    "nodemon": "^3.0.3"
+  }
 }
