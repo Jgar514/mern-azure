@@ -1,6 +1,3 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
 name: Build and deploy Node.js app to Azure Web App - mern-azure-app-jg
 
 on:
@@ -43,7 +40,7 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write #This is required for requesting the JWT
+      id-token: write # This is required for requesting the JWT
 
     steps:
       - name: Download artifact from build job
@@ -54,6 +51,14 @@ jobs:
       - name: Unzip artifact for deployment
         run: unzip release.zip
       
+      - name: Set up Node.js version for deployment
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+
+      - name: Install dependencies for deployment
+        run: npm install
+
       - name: Login to Azure
         uses: azure/login@v1
         with:
@@ -68,4 +73,3 @@ jobs:
           app-name: 'mern-azure-app-jg'
           slot-name: 'Production'
           package: .
-          
