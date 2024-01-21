@@ -1,41 +1,33 @@
-require('dotenv').config();
+require('dotenv').config()
 
-const express = require('express');
-const mongoose = require('mongoose');
-const path = require('path');
-const workoutRoutes = require('./routes/workouts');
-const userRoutes = require('./routes/user');
+const express = require('express')
+const mongoose = require('mongoose')
+const workoutRoutes = require('./routes/workouts')
+const userRoutes = require('./routes/user')
 
-// Express app
-const app = express();
+// express app
+const app = express()
 
-app.set('port', process.env.PORT || 8181);
-console.log("++++++++++++++++" + app.get('port'));
+// middleware
+app.use(express.json())
 
+app.use((req, res, next) => {
+	console.log(req.path, req.method)
+	next()
+})
 
-// Serve static files for React build
-app.use(express.static('./frontend/build'));
+// routes
+app.use('/api/workouts', workoutRoutes)
+app.use('/api/user', userRoutes)
 
-// Middleware
-app.use(express.json());
-
-// Serve React index.html for all routes
-app.get("*", (req, res) => {
-	res.sendFile(path.resolve(__dirname, "frontend", "build",
-		"index.html"));
-});
-
-// Routes
-app.use('/api/workouts', workoutRoutes);
-app.use('/api/user', userRoutes);
-
+// connect to db
 mongoose.connect(process.env.MONGO_URI)
 	.then(() => {
-		// Listen for requests
-		app.listen(port, () => {
-			console.log('Connected to the database. Server is listening on port:', port);
-		});
+		// listen for requests
+		app.listen(process.env.PORT, () => {
+			console.log('connected to db & listening on port', process.env.PORT)
+		})
 	})
 	.catch((error) => {
-		console.error('Error connecting to MongoDB:', error);
-	});
+		console.log(error)
+	})
