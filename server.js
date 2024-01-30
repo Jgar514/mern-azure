@@ -1,19 +1,20 @@
-require('dotenv').config()
+require('dotenv').config();
 
-const express = require('express')
-const mongoose = require('mongoose')
-const workoutRoutes = require('./routes/workouts')
-const userRoutes = require('./routes/user')
-const path = require("path"); // on top
+const express = require('express');
+const mongoose = require('mongoose');
+const workoutRoutes = require('./routes/workouts');
+const userRoutes = require('./routes/user');
+const path = require("path");
 
 // express app
 const app = express();
 
-// Serve Static assets if in production
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static("fontend/build"));
+  app.use(express.static(path.join(__dirname, "frontend", "build")));
+
+  // Serve index.html for any other routes
   app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "fontend", "build", "index.html"));
+    res.sendFile(path.join(__dirname, "frontend", "build", "index.html"));
   });
 }
 
@@ -30,13 +31,16 @@ app.use('/api/workouts', workoutRoutes);
 app.use('/api/user', userRoutes);
 
 // connect to db
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
   .then(() => {
     // listen for requests
     app.listen(process.env.PORT, () => {
-      console.log('connected to db & listening on port', process.env.PORT);
+      console.log('Connected to db & listening on port', process.env.PORT);
     });
   })
   .catch((error) => {
-    console.log(error);
+    console.error("Error connecting to MongoDB:", error);
   });
