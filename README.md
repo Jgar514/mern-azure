@@ -9,4 +9,3 @@
 ├── routes/             # Backend Express.js routes
 └── server.js           # Main backend server file
 
-```
